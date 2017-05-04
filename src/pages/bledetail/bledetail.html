@@ -1,0 +1,96 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ble.name}}</ion-title>
+      <ion-buttons end>
+          <button (click)="disconnect()" ion-button end>Disconnect</button>
+      </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+   <ion-card>
+       <ion-card-header>Connection info</ion-card-header>
+       <ion-card-content>
+          <p>Name: {{ble.name}}</p> 
+          <p>ID: {{ble.id}}</p>
+          <p>RSSI: {{ble.rssi}} dB</p>
+          <p>Status: {{connectionStatus}}</p>
+       </ion-card-content>    
+   </ion-card>  
+   <ion-card>
+      <ion-card-header>Car control</ion-card-header>     
+      <ion-card-content> 
+        <ion-grid>
+            <ion-row>
+                <ion-col width-30><button (click)="moveCar('FORWARD-LEFT')" ion-button>LF</button></ion-col>
+                <ion-col width-30><button (click)="moveCar('FORWARD')" ion-button icon-only><ion-icon name="md-arrow-up"></ion-icon></button></ion-col>
+                <ion-col width-30><button (click)="moveCar('FORWARD-RIGHT')" ion-button>RF</button></ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col><button (click)="moveCar('RELEASE')" ion-button icon-only><ion-icon name="md-close"></ion-icon></button></ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col width-30><button (click)="moveCar('BACKWARD-LEFT')" ion-button>LB</button></ion-col>
+                <ion-col width-30><button (click)="moveCar('BACKWARD')" ion-button icon-only><ion-icon name="md-arrow-down"></ion-icon></button></ion-col>
+                <ion-col width-30><button (click)="moveCar('BACKWARD-RIGHT')" ion-button>RB</button></ion-col>
+            </ion-row>
+        </ion-grid>
+      </ion-card-content>
+   </ion-card>  
+   <ion-card>
+       <ion-card-header>Motor Control option</ion-card-header>
+       <ion-card-content>   
+         <ion-list>
+             <ion-item>
+                <ion-label>Current speed: {{speed}}</ion-label> 
+                <ion-range min="0" max="255" pin="true" [(ngModel)]="speed" (ionChange)="setSpeed()" primary>
+                    <ion-icon range-left small name="md-speedometer" primary></ion-icon>
+                    <ion-icon range-right name="md-speedometer" primary></ion-icon>
+                </ion-range>  
+             </ion-item>
+             <ion-item>
+                <ion-label>Obstacle avoidance</ion-label>
+                <ion-toggle [(ngModel)]="oav" checked="false" (ngModelChange)="enableOav()"></ion-toggle>
+             </ion-item>
+             <ion-item>
+                <ion-label>Wall follower</ion-label>
+                <ion-toggle [(ngModel)]="wf" checked="false" (ngModelChange)="enableWf()"></ion-toggle>
+             </ion-item>
+             <ion-item>
+                <ion-label>Line follower</ion-label>
+                <ion-toggle [(ngModel)]="lf" checked="false" (ngModelChange)="enableLf()"></ion-toggle>
+             </ion-item>        
+         </ion-list>    
+       </ion-card-content>    
+   </ion-card> 
+   <ion-card>
+       <ion-card-header>Servo Control option</ion-card-header>
+       <ion-card-content>   
+         <ion-list>
+             <ion-item>
+                <ion-label>Vertical</ion-label> 
+                <ion-range min="0" max="180" pin="true" [(ngModel)]="vAngle" (ionChange)="rotateVServo()" primary>
+                    <ion-icon range-left small name="md-refresh" primary></ion-icon>
+                    <ion-icon range-right name="md-refresh" primary></ion-icon>
+                </ion-range>  
+             </ion-item> 
+             <ion-item>
+                <ion-label>Horizontal</ion-label> 
+                <ion-range min="0" max="180" pin="true" [(ngModel)]="hAngle" (ionChange)="rotateHServo()" primary>
+                    <ion-icon range-left small name="md-refresh" primary></ion-icon>
+                    <ion-icon range-right name="md-refresh" primary></ion-icon>
+                </ion-range>  
+             </ion-item>        
+         </ion-list>    
+       </ion-card-content>
+   </ion-card>
+   <ion-card>
+       <ion-card-header>System log</ion-card-header>
+       <ion-card-content>   
+         {{blerxData}}
+       </ion-card-content>    
+   </ion-card>   
+</ion-content>
